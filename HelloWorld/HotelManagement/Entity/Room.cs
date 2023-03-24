@@ -9,20 +9,41 @@ namespace HotelManagement.Entity
     internal class Room
     {
         int roomNumber { get; }
-        String roomName { get; }
+        String roomSize { get; }
         int roomPrice { get; }
 
-        public Room(int roomNumber, String roomName, int roomPrice)
+        bool isBooked { get; set; }
+
+        public Room(int roomNumber, String roomSize, int roomPrice)
         {
             this.roomNumber = roomNumber;
-            this.roomName = roomName;
+            this.roomSize = roomSize;
             this.roomPrice = roomPrice;
+            this.isBooked = false;
         }
 
-        public int RoomNumber() { 
+        public int getRoomNumber() { 
         return roomNumber;
         }
        
+        public String getRoomSize()
+        {
+            return roomSize;
+        }
+
+        public int getRoomPrice() {
+            return roomPrice;
+
+        }
+        public bool IsBooked()
+        {
+            return isBooked;
+        }
+
+        public void changeBookStatus()
+        {
+            this.isBooked = true;
+        }
 
     }
 }

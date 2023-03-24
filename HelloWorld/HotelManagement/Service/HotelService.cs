@@ -1,4 +1,5 @@
-﻿using HotelManagement.Entity;
+﻿using HotelManagement.DTO;
+using HotelManagement.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace HotelManagement.Service
     internal class HotelService
     {
         static List<Room> rooms = new List<Room>();
+        static List<Booking> bookings = new List<Booking>();
 
         public string addHotel(String hotelName, String hotelPassword)
         {
@@ -18,7 +20,8 @@ namespace HotelManagement.Service
         }
 
 
-        public List<Room> addRoom() {
+        public List<Room> addRoom()
+        {
 
             Room singleroom = new Room(101, "single", 500);
             Room singleroom1 = new Room(102, "single", 500);
@@ -44,15 +47,48 @@ namespace HotelManagement.Service
             Console.WriteLine("Success add room.");
             return rooms;
         }
-        public Room? getRoom(List<Room> rooms1)
+
+        public Room GetRoom(int roomid)
+        {
+            foreach (Room ro in rooms)
+            {
+                if (ro.getRoomNumber() == roomid && !ro.IsBooked())
+                {
+                    return ro;
+                }
+                else {
+                    continue;
+                }
+            }
+            throw new Exception("No more empty room 68");
+        }
+
+
+
+        public void getRoomList(List<Room> rooms1)
         {
             for (int i = 0; i < rooms1.Count; i++)
             {
-                Console.WriteLine(i);
-                int roomno = rooms1[i].RoomNumber();
-                Console.WriteLine("RoomNumber"+ " " + roomno);
+                if (rooms1[i] != null && !rooms1[i].IsBooked())
+                {
+                    int roomno = rooms1[i].getRoomNumber();
+                    Console.WriteLine("RoomNumber"+ " " + roomno);
+                }
             }
-            return null;
-        } 
+        }
+
+        public void makeBooking(int roomNo, String username, DateTime date)
+        {
+                Room ro = GetRoom(roomNo);
+                BookingRequestDTO bookingRequestDTO = new BookingRequestDTO(ro, username, date);
+                Booking newBooking = new Booking(bookingRequestDTO);
+                ro.changeBookStatus();
+                bookings.Add(newBooking);
+                Console.WriteLine("Success to booking");
+                Console.WriteLine("Booking info : " + newBooking.getBookignDate()+" // " + newBooking.getRoomName()+" // "  + newBooking.getRoomNumber());
+              
+            }
+
+        }
+
     }
-}

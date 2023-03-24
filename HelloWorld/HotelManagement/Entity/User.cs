@@ -12,12 +12,22 @@ namespace HotelManagement.Entity
         String password { get; }
         int customerMoney { get; }
 
-        public User(String userName, String password, int customerMoney)
+      
+
+
+        public User(String userName, String password)
         {
             this.userName = userName;
             this.password = password;
-            this.customerMoney = customerMoney;
+            this.customerMoney = 10000;
 
+        }
+
+        public string getUserName() { return userName; }
+        public string getPassword() { return password; }
+        public int getCustomerMoney()
+        {
+            return customerMoney;
         }
     }
 }
