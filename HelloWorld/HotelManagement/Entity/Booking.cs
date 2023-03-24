@@ -1,6 +1,8 @@
-﻿using System;
+﻿using HotelManagement.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,15 +14,23 @@ namespace HotelManagement.Entity
         String roomName { get; }
         String userName { get; }
         int roomPrice { get; }
+        String roomSize { get; }
+        DateTime bookignDate { get; }
 
-        public Booking(int roomNumber, String roomName, String userName, int roomPrice)
+        public Booking(BookingRequestDTO bookigRequestDTO)
         {
-            this.roomNumber = roomNumber; 
-            this.roomName = roomName;
-            this.userName = userName;
-            this.roomPrice = roomPrice;
+            this.roomNumber = bookigRequestDTO.getRoomNumber();
+            this.userName = bookigRequestDTO.getUserName();
+            this.roomPrice = bookigRequestDTO.getRoomPrice();
+            this.bookignDate = bookigRequestDTO.getBookigDate();
+
         }
 
-
+        public int getRoomNumber() { return roomNumber; }
+        public String getRoomName() { return roomName; }
+        public int getRoomPrice() { return roomPrice; }
+        public String getRoomSize() { return roomSize; }
+        public DateTime getBookignDate() { return bookignDate; }
+        public String getUsername() { return userName; }
     }
 }
