@@ -19,5 +19,10 @@ namespace HotelManagement.Entity
             this.roomPrice = roomPrice;
         }
 
+        public int RoomNumber() { 
+        return roomNumber;
+        }
+       
+
     }
 }

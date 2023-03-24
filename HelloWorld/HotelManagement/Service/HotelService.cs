@@ -9,15 +9,17 @@ namespace HotelManagement.Service
 {
     internal class HotelService
     {
-        List<Room> rooms = new List<Room>();
+        static List<Room> rooms = new List<Room>();
 
-        public string addHotel(String hotelName, String hotelPassword) {
-            Hotel hotel = new Hotel(hotelName,hotelPassword);
-            return "sucess add Hotel";
+        public string addHotel(String hotelName, String hotelPassword)
+        {
+            Hotel hotel = new Hotel(hotelName, hotelPassword);
+            return "success add Hotel";
         }
 
-        public List<Room> addRoom()
-        {
+
+        public List<Room> addRoom() {
+
             Room singleroom = new Room(101, "single", 500);
             Room singleroom1 = new Room(102, "single", 500);
             Room singleroom2 = new Room(103, "single", 500);
@@ -42,12 +44,15 @@ namespace HotelManagement.Service
             Console.WriteLine("Success add room.");
             return rooms;
         }
-
-        public string getRoomList()
+        public Room? getRoom(List<Room> rooms1)
         {
-           
-            return "sucess add Hotel";
-        }
-
+            for (int i = 0; i < rooms1.Count; i++)
+            {
+                Console.WriteLine(i);
+                int roomno = rooms1[i].RoomNumber();
+                Console.WriteLine("RoomNumber"+ " " + roomno);
+            }
+            return null;
+        } 
     }
 }
