@@ -48,47 +48,88 @@ namespace HotelManagement.Service
             return rooms;
         }
 
-        public Room GetRoom(int roomid)
+
+        public void getRoomList(List<Room> rooms1, DateTime bookingDate)
         {
-            foreach (Room ro in rooms)
-            {
-                if (ro.getRoomNumber() == roomid && !ro.IsBooked())
-                {
-                    return ro;
-                }
-                else {
-                    continue;
-                }
-            }
-            throw new Exception("No more empty room 68");
-        }
 
-
-
-        public void getRoomList(List<Room> rooms1)
-        {
             for (int i = 0; i < rooms1.Count; i++)
             {
                 if (rooms1[i] != null && !rooms1[i].IsBooked())
                 {
+                    Console.WriteLine(rooms1[i].getRoomSize());
                     int roomno = rooms1[i].getRoomNumber();
                     Console.WriteLine("RoomNumber"+ " " + roomno);
                 }
             }
         }
 
-        public void makeBooking(int roomNo, String username, DateTime date)
+
+        public Room GetRoom(int roomid)
         {
-                Room ro = GetRoom(roomNo);
-                BookingRequestDTO bookingRequestDTO = new BookingRequestDTO(ro, username, date);
-                Booking newBooking = new Booking(bookingRequestDTO);
-                ro.changeBookStatus();
-                bookings.Add(newBooking);
-                Console.WriteLine("Success to booking");
-                Console.WriteLine("Booking info : " + newBooking.getBookignDate()+" // " + newBooking.getRoomName()+" // "  + newBooking.getRoomNumber());
-              
+
+            foreach (Room ro in rooms)
+            {
+                if (ro.getRoomNumber() == roomid)
+                {
+                    return ro;
+                }
+                
             }
+
+            throw new Exception("No room found with the specified ID and is not booked.");
 
         }
 
+
+
+        public void makeBooking(int roomNo, String username, DateTime date)
+        {
+            Room ro = GetRoom(roomNo);
+            if (ro.IsBooked()) {
+                throw new Exception("Already booked");
+            }
+            BookingRequestDTO bookingRequestDTO = new BookingRequestDTO(ro, username, date);
+            Booking newBooking = new Booking(bookingRequestDTO);
+            ro.changeBookStatus();
+            bookings.Add(newBooking);
+            Console.WriteLine("Success to booking");
+            Console.WriteLine("Booking info : "+" / "+ newBooking.getBookingNumber()+" / " + newBooking.getBookignDate()+" // " + newBooking.getRoomName()+" // "  + newBooking.getRoomNumber());
+
+        }
+
+        public void getBookingList(String username)
+        {
+            foreach (Booking booking in bookings)
+            {
+                if (booking.getUsername() == username && !booking.isDeleted())
+                {
+                    Console.WriteLine("BookingList : " +"  / "+ booking.getBookingNumber()+" / "+ booking.getRoomNumber() +" / "+ booking.getRoomSize()+" / "+ booking.getUsername());
+                }
+            }
+
+        }
+        public void getBooking(String bookingNumber)
+        {
+            foreach (Booking booking in bookings)
+            {
+                if (booking.getBookingNumber() == bookingNumber && !booking.isDeleted())
+                {
+                    Console.WriteLine("BookingList : " +"  / "+ booking.getBookingNumber()+" / "+ booking.getRoomNumber() +" / "+ booking.getRoomSize()+" / "+ booking.getUsername());
+                }
+            }
+        }
+
+        public void deleteBooking(string bookingNumber)
+        {
+            foreach (Booking booking in bookings)
+            {
+                if (booking.getBookingNumber() == bookingNumber)
+                {
+                    Room ro = GetRoom(booking.getRoomNumber());
+                    ro.changeBookStatusFalse();
+                    booking.deleteBooking();
+                }
+            }
+        }
     }
+}

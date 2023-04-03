@@ -13,6 +13,7 @@ namespace HotelManagement.Entity
         int roomPrice { get; }
 
         bool isBooked { get; set; }
+        DateTime bookingDate { get; set; }
 
         public Room(int roomNumber, String roomSize, int roomPrice)
         {
@@ -43,6 +44,16 @@ namespace HotelManagement.Entity
         public void changeBookStatus()
         {
             this.isBooked = true;
+        }
+
+        public void changeBookStatusFalse()
+        {
+            this.isBooked = false;
+        }
+
+        public DateTime getBookingDate()
+        {
+            return bookingDate;
         }
 
     }
