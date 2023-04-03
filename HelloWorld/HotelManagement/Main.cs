@@ -55,9 +55,10 @@ while (true)
             {
                 Console.WriteLine("3.Get user info");
                 Console.WriteLine("4.Make a booking");
-                //Console.WriteLine("5.Get reservation "); //get a reservation // using reservation number
-                //Console.WriteLine("6.Cancel the reservation");// cancel reservation list // using reservation number
-                //Console.WriteLine("7.exit");
+                Console.WriteLine("5.Check my booking list"); 
+                Console.WriteLine("6.Check my booking by booking number"); //get a reservation // using reservation number
+                Console.WriteLine("7.Cancel the reservation");// cancel reservation list // using reservation number
+                Console.WriteLine("8.exit");
                 Console.WriteLine("Input Number");
                 string input = Console.ReadLine();
                 int b;
@@ -70,48 +71,46 @@ while (true)
                 {
                     Console.WriteLine("Available Room List");
                     Console.WriteLine("--------------------");
-                    hotelService.getRoomList(romms);
+                    Console.WriteLine("Enter reservation date format : MM/DD/YY");
+                    String reservationDate = Console.ReadLine();
+                    DateTime dt = Convert.ToDateTime(reservationDate);
+                    hotelService.getRoomList(romms, dt);
                     Console.WriteLine("--------------------");
                     Console.WriteLine("Enter room number : ");
                     String roomNumber = Console.ReadLine();
                     int roomNo;
                     Int32.TryParse(roomNumber, out roomNo);
-                    Console.WriteLine("Enter reservation date format : DD/MM/YY");
-                    String reservationDate = Console.ReadLine();
-                    DateTime dt = Convert.ToDateTime(reservationDate);
+
+
 
                     hotelService.makeBooking(roomNo, user.getUserName(), dt);
+                }
+                else if (b == 5)
+                {
+                    Console.WriteLine("--------------------");
+                    Console.WriteLine("Check my booking list");
+                    hotelService.getBookingList(user.getUserName());
+                }
+                else if (b == 6)
+                {
+                    Console.WriteLine("--------------------");
+                    Console.WriteLine("Check my booking by booking number");
+                    string bookingNumber = Console.ReadLine();
+                    hotelService.getBooking(bookingNumber);
+                }
+                else if (b == 7)
+                {
+                    Console.WriteLine("--------------------");
+                    Console.WriteLine("Cancel the booking");
+                    Console.WriteLine("Put the bookingNumber for cancel");
+                    string bookingNumber = Console.ReadLine();
+                    hotelService.deleteBooking(bookingNumber);
+                    Console.WriteLine("Sucess cancel the booking");
+                }
+                else if (b==8) {
+                    break;
                 }
             }
         }
     }
 }
-
-//    else if (a == 3)
-//    {
-//        System.out.println("전체객실 조회");
-//        hotelService.getAllList();
-//    }
-//    else if (a == 4)
-//    {
-//        System.out.print("예약번호 : ");
-//        String reservationNumber = sc.next();
-//        customerService.checkCustomerOwnReservation(reservationNumber);
-
-//    }
-//    else if (a == 5)
-//    {
-//        System.out.print("예약번호 : ");
-//        String reservationNumber = sc.next();
-//        customerService.deleteCustomerOwnReservation(reservationNumber, hotel, hotelService.addRoom());
-
-//    }
-//    else if (a == 6)
-//    {
-//        break;
-//    }
-//    else if (a == 0)
-//    {
-//        otherService.getSevenDate();
-//    }
-//}
